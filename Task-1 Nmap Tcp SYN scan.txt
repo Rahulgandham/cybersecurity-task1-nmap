@@ -1,0 +1,36 @@
+Nmap scan report for 172.20.46.155
+Host is up (0.00049s latency).
+Not shown: 996 closed tcp ports (reset)
+PORT     STATE SERVICE
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+8090/tcp open  opsmessaging
+
+Nmap done: 256 IP addresses (2 hosts up) scanned in 54.23 seconds
+
+
+Security Risks
+# Host 172.20.46.126
+- Port 53/tcp (DNS):
+  - Risks: Vulnerable to DNS amplification attacks, spoofing, or unauthorized access if misconfigured.
+  - Mitigation: Enable DNSSEC, restrict recursive queries.
+
+# Host 172.20.46.155
+- Port 135/tcp (msrpc):
+  - Risks: Exploitable for remote code execution if unpatched (e.g., MS03-026).
+  - Mitigation: Apply Windows patches, restrict access.
+- Port 139/tcp (netbios-ssn):
+  - Risks: Unauthorized file access, man-in-the-middle attacks, worm propagation.
+  - Mitigation: Disable if unused, use SMBv2+, segment network.
+- Port 445/tcp (microsoft-ds):
+  - Risks: SMB exploits (e.g., WannaCry), credential theft, ransomware.
+  - Mitigation: Patch systems, disable SMBv1, restrict access.
+- Port 8990/tcp (opsmessaging):
+  - Risks: Unknown vulnerabilities, potential backdoor, data leakage.
+  - Mitigation: Identify software, update, restrict access.
+
+# General Risks
+- Limited host detection may hide compromised devices.
+- Open ports on a local network increase lateral movement risk.
+- Legacy services (e.g., NetBIOS) suggest outdated systems prone to exploits.
